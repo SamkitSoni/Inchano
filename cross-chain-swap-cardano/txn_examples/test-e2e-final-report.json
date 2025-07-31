@@ -1,0 +1,26 @@
+{
+  "timestamp": "2025-07-31T07:33:55.600Z",
+  "status": "completed",
+  "orderHash": "0xc587fe47cc43d494fc6f2b9fe6960df3f13915df3375427e2d338a1189ee5a90",
+  "secret": "9d48f603f973a9b529674c373432a41886b419b91bfb8ce9779e712c93447d66",
+  "escrows": {
+    "source": {
+      "address": "addr_test1q96b0a29f9ea265de128403fbfc8ef56eb88b2de38f92edf464",
+      "status": "withdrawn",
+      "withdrawnAt": "2025-07-31T07:33:55.589Z",
+      "txHash": "9995a2df6a23be1f2f9078a3305075a1e4a68cfacec228f6496ab1575094e7ad"
+    },
+    "destination": {
+      "address": "addr_test1q83ee3ca377f043db7e2f89f23a3fd79cd4a98ea8ba7adbc2e0",
+      "status": "withdrawn",
+      "withdrawnAt": "2025-07-31T07:33:55.599Z",
+      "txHash": "4235e5afac4fedea58ad7fe3d11c325614c1d820b5f5846e5a3f7929f7fd82c1"
+    }
+  },
+  "summary": {
+    "swapCompleted": true,
+    "secretRevealed": true,
+    "atomicGuarantee": true,
+    "crossChainSuccess": true
+  }
+}

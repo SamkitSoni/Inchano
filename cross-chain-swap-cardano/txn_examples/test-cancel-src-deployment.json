@@ -1,0 +1,25 @@
+{
+  "type": "SourceEscrow",
+  "escrowAddress": "addr_test1qf3cf8f0f4bda52c10d269b8e22bdcfe6fab7c2352e4941ad52",
+  "orderHash": "08002b34cfeb349a4f82ccb2ffe45d0541a672df01a9319b69e56222cc9c690f",
+  "secret": "081d52557ba4686592364784548d98dca94f8a6b6deab0027eb716b3c793c81a",
+  "secretHash": "0798513dea3805e884a6770b6a547c423211e794338022730fe1058298ead9f3",
+  "maker": "addr_test1qbed5266f4ee8b26b8c4465cfcd4392a23747c0ac83d4bf6658",
+  "taker": "addr_test1q448252cc8464f70fdc1203ad0a227462b4446a1d21ffc7f0eb",
+  "amount": 5000000,
+  "safetyDeposit": 2000000,
+  "timelocks": {
+    "deployTime": 1753904116,
+    "srcWithdrawTime": 1753904416,
+    "srcPublicWithdrawTime": 1753904716,
+    "srcCancelTime": 1753905016,
+    "srcPublicCancelTime": 1753905616,
+    "dstWithdrawTime": 1753904566,
+    "dstPublicWithdrawTime": 1753904866,
+    "dstCancelTime": 1753905166
+  },
+  "txHash": "test_tx_1753905316387",
+  "deployedAt": "2025-07-30T19:55:16.387Z",
+  "network": "preprod",
+  "status": "deployed"
+}

@@ -1,0 +1,28 @@
+{
+  "type": "DestinationEscrow",
+  "escrowAddress": "addr_test1q511e1b21aea3224cb03a04a77eae5cdfcbea543a609bea85b7",
+  "orderHash": "faca70686b48e673b9daafae01325aece61c1137276b2f1067af64e5f4fa49b4",
+  "secret": "33f17e7e0c64e2a9423340e52337c946ed6f7ec25b7d51772003be667b6e3900",
+  "secretHash": "eab498a1778f34f93e070fb358e791f16c6ebfc52d58f8f19a57f752d728fbf8",
+  "maker": "addr_test1qrytuz9x92h8pmt9rclnmft5gsfwctpgevq3sk3jfa5e42sqv2nd4",
+  "taker": "addr_test1qbf3cec1cf1a376089b1ee0848311b375eeaa1f045a896bef5d",
+  "amount": 5000000,
+  "safetyDeposit": 2000000,
+  "timelocks": {
+    "deployTime": 1753916293,
+    "srcWithdrawTime": 1753916593,
+    "srcPublicWithdrawTime": 1753916893,
+    "srcCancelTime": 1753917193,
+    "srcPublicCancelTime": 1753917493,
+    "dstWithdrawTime": 1753916743,
+    "dstPublicWithdrawTime": 1753917043,
+    "dstCancelTime": 1753917343
+  },
+  "txHash": "79acbde59b66d4e3374f187a2ac62ed52f4d847cfeae43d4c5405b6ae0ab4428",
+  "deployedAt": "2025-07-30T22:58:13.017Z",
+  "network": "preprod",
+  "status": "withdrawn",
+  "srcCancellationTime": 1753917193,
+  "withdrawnAt": "2025-07-30T22:58:13.018Z",
+  "withdrawalTxHash": "1dfd302351d38b493b1536295a225edffa9dba78968a102a209c46b9094c2e15"
+}

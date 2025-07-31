@@ -1,0 +1,72 @@
+{
+  "summary": {
+    "totalTests": 10,
+    "passed": 10,
+    "failed": 0,
+    "successRate": 100,
+    "totalTimeMs": 49,
+    "timestamp": "2025-07-30T19:55:16.403Z"
+  },
+  "tests": [
+    {
+      "name": "Timelock Validation",
+      "passed": true,
+      "message": "",
+      "timestamp": "2025-07-30T19:55:16.355Z"
+    },
+    {
+      "name": "Correct Secret Hash",
+      "passed": true,
+      "message": "",
+      "timestamp": "2025-07-30T19:55:16.358Z"
+    },
+    {
+      "name": "Wrong Secret Rejection",
+      "passed": true,
+      "message": "",
+      "timestamp": "2025-07-30T19:55:16.358Z"
+    },
+    {
+      "name": "Source Withdrawal Test Setup",
+      "passed": true,
+      "message": "Test environment prepared",
+      "timestamp": "2025-07-30T19:55:16.385Z"
+    },
+    {
+      "name": "Destination Withdrawal Test Setup",
+      "passed": true,
+      "message": "Test environment prepared",
+      "timestamp": "2025-07-30T19:55:16.387Z"
+    },
+    {
+      "name": "Cancellation Test Setup",
+      "passed": true,
+      "message": "Test cancellation scenarios prepared",
+      "timestamp": "2025-07-30T19:55:16.387Z"
+    },
+    {
+      "name": "Invalid Secret Detection",
+      "passed": true,
+      "message": "Correctly rejected invalid secret",
+      "timestamp": "2025-07-30T19:55:16.388Z"
+    },
+    {
+      "name": "Early Withdrawal Prevention",
+      "passed": true,
+      "message": "Correctly prevented early withdrawal",
+      "timestamp": "2025-07-30T19:55:16.388Z"
+    },
+    {
+      "name": "Atomic Swap Sequence Setup",
+      "passed": true,
+      "message": "Coordinated escrow data created",
+      "timestamp": "2025-07-30T19:55:16.388Z"
+    },
+    {
+      "name": "Performance Benchmarks",
+      "passed": true,
+      "message": "All operations within acceptable limits",
+      "timestamp": "2025-07-30T19:55:16.403Z"
+    }
+  ]
+}

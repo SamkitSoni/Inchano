@@ -1,0 +1,44 @@
+{
+  "type": "DestinationEscrow",
+  "escrowAddress": "addr_test1qfd224d32562c1f677fe609ad01f0a8d4ccda3f1343591d7bfa",
+  "orderHash": "08002b34cfeb349a4f82ccb2ffe45d0541a672df01a9319b69e56222cc9c690f",
+  "secret": "b29a3049517c48a574e692b2ad9bcbc42c97b2136b49ab15d86f9deca1eb1122",
+  "secretHash": "dd4a6068ae5aceb72e9d93cd7abbd1bd65f708695f8cc4e2d541fb331862afa9",
+  "maker": "addr_test1qbed5266f4ee8b26b8c4465cfcd4392a23747c0ac83d4bf6658",
+  "taker": "addr_test1q448252cc8464f70fdc1203ad0a227462b4446a1d21ffc7f0eb",
+  "amount": 5000000,
+  "safetyDeposit": 2000000,
+  "timelocks": {
+    "deployTime": 1753903816,
+    "srcWithdrawTime": 1753904116,
+    "srcPublicWithdrawTime": 1753904416,
+    "srcCancelTime": 1753904716,
+    "srcPublicCancelTime": 1753905016,
+    "dstWithdrawTime": 1753904266,
+    "dstPublicWithdrawTime": 1753904566,
+    "dstCancelTime": 1753905016
+  },
+  "txHash": "test_tx_1753905316387",
+  "deployedAt": "2025-07-30T19:55:16.387Z",
+  "network": "preprod",
+  "status": "deployed",
+  "srcCancellationTime": 1753904716,
+  "immutables": {
+    "orderHash": "08002b34cfeb349a4f82ccb2ffe45d0541a672df01a9319b69e56222cc9c690f",
+    "secretHash": "dd4a6068ae5aceb72e9d93cd7abbd1bd65f708695f8cc4e2d541fb331862afa9",
+    "makerAddr": "addr_test1qbed5266f4ee8b26b8c4465cfcd4392a23747c0ac83d4bf6658",
+    "takerAddr": "addr_test1q448252cc8464f70fdc1203ad0a227462b4446a1d21ffc7f0eb",
+    "escrowAmount": 5000000,
+    "safetyDeposit": 2000000,
+    "timelocks": {
+      "deployTime": 1753903816,
+      "srcWithdrawTime": 1753904116,
+      "srcPublicWithdrawTime": 1753904416,
+      "srcCancelTime": 1753904716,
+      "srcPublicCancelTime": 1753905016,
+      "dstWithdrawTime": 1753904266,
+      "dstPublicWithdrawTime": 1753904566,
+      "dstCancelTime": 1753905016
+    }
+  }
+}

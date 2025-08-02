@@ -53,6 +53,7 @@
     "@types/express": "^4.17.0",
     "@types/ws": "^8.18.1",
     "alchemy-sdk": "^3.6.2",
+    "axios": "^1.11.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",
     "ethers": "^5.7.2",

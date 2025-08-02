@@ -184,17 +184,17 @@ class AuctionMonitor extends EventEmitter {
 
     public calculateCurrentPrice(order: DutchAuctionOrder, currentTime: number): string {
         // Use the corrected implementation from auction-details utils
-        return calculateCurrentPrice(order as AuctionDetailsOrder, currentTime);
+        return calculateCurrentPrice(order as unknown as AuctionDetailsOrder, currentTime);
     }
 
     public calculatePriceDecayRate(order: DutchAuctionOrder): string {
         // Use the corrected implementation from auction-details utils
-        return calculatePriceDecayRate(order as AuctionDetailsOrder);
+        return calculatePriceDecayRate(order as unknown as AuctionDetailsOrder);
     }
 
     public calculateAuctionProgress(order: DutchAuctionOrder, currentTime: number): number {
         // Use the corrected implementation from auction-details utils
-        return calculateAuctionProgress(order as AuctionDetailsOrder, currentTime);
+        return calculateAuctionProgress(order as unknown as AuctionDetailsOrder, currentTime);
     }
 
     public getAuctionStatus(order: DutchAuctionOrder, currentTime: number): 'pending' | 'active' | 'expired' {
@@ -205,7 +205,7 @@ class AuctionMonitor extends EventEmitter {
 
     public isProfitable(order: DutchAuctionOrder, currentTime: number, gasPrice: string): boolean {
         // Use the corrected implementation from auction-details utils
-        return isProfitable(order as AuctionDetailsOrder, currentTime, gasPrice, this.config.minProfitMargin);
+        return isProfitable(order as unknown as AuctionDetailsOrder, currentTime, gasPrice, this.config.minProfitMargin);
     }
 
     public calculateWithProfitability(order: DutchAuctionOrder, gasPrice: string): ProfitabilityResult {

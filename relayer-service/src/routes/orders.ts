@@ -42,16 +42,37 @@ export interface OrdersListQuery {
   sortOrder?: 'asc' | 'desc';
 }
 
+interface OrderWithMetadata {
+  orderHash: string;
+  maker: string;
+  receiver: string;
+  makerAsset: string;
+  takerAsset: string;
+  makingAmount: string;
+  takingAmount: string;
+  makerAmount: string;
+  takerAmount: string;
+  salt: string;
+  signature: string;
+  startPrice: string;
+  endPrice: string;
+  startTime: number;
+  endTime: number;
+  auctionStartTime: number;
+  auctionEndTime: number;
+  status: AuctionStatus;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 class OrdersRoutes {
   private router: Router;
-  private orders: Map<string, DutchAuctionOrder & { status: AuctionStatus; createdAt: Date; updatedAt: Date }> = new Map();
-  private calculator: AuctionCalculator;
+  private orders: Map<string, OrderWithMetadata> = new Map();
   private webSocketService: WebSocketService | undefined;
   private orderProcessingService: OrderProcessingService;
 
   constructor(webSocketService?: WebSocketService) {
     this.router = Router();
-    this.calculator = new AuctionCalculator();
     this.webSocketService = webSocketService;
     this.orderProcessingService = new OrderProcessingService(webSocketService);
     this.setupRoutes();
@@ -150,14 +171,14 @@ class OrdersRoutes {
         return;
       }
 
-      // Also store in legacy format for backward compatibility
-      const legacyOrder: DutchAuctionOrder & { status: AuctionStatus; createdAt: Date; updatedAt: Date } = {
+      // Store in our internal format
+      const orderWithMetadata: OrderWithMetadata = {
         ...processedOrder.dutchOrder,
         status: this.mapProcessingStatusToAuctionStatus(processedOrder.status),
         createdAt: processedOrder.createdAt,
         updatedAt: processedOrder.updatedAt
       };
-      this.orders.set(result.orderHash!, legacyOrder);
+      this.orders.set(result.orderHash!, orderWithMetadata);
       
       logger.info('Order created and processed successfully', { 
         orderHash: result.orderHash,
@@ -171,7 +192,7 @@ class OrdersRoutes {
         success: true,
         data: {
           orderHash: result.orderHash,
-          order: this.sanitizeOrderForResponse(legacyOrder),
+          order: this.sanitizeOrderForResponse(orderWithMetadata),
           status: processedOrder.status,
           message: 'Order created and processed successfully'
         }
@@ -423,7 +444,7 @@ class OrdersRoutes {
       }
 
       const currentTime = Math.floor(Date.now() / 1000);
-      const auctionDetails = this.calculator.calculateAuctionDetails(order, currentTime);
+      const auctionDetails = AuctionCalculator.calculateAuctionDetails(this.convertToOrderCalculatorFormat(order), currentTime);
 
       res.json({
         success: true,
@@ -461,7 +482,7 @@ class OrdersRoutes {
       }
 
       const currentTime = Math.floor(Date.now() / 1000);
-      const calculationResult = this.calculator.calculateAuctionDetails(order, currentTime);
+      const calculationResult = AuctionCalculator.calculateAuctionDetails(this.convertToOrderCalculatorFormat(order), currentTime);
       
       const timeRemaining = Math.max(0, order.auctionEndTime - currentTime);
       const progress = Math.min(1, Math.max(0, (currentTime - order.auctionStartTime) / (order.auctionEndTime - order.auctionStartTime)));
@@ -469,8 +490,14 @@ class OrdersRoutes {
       const auctionDetails: AuctionDetails = {
         orderHash,
         currentPrice: calculationResult.currentPrice,
+        startPrice: order.startPrice,
+        endPrice: order.endPrice,
+        startTime: order.startTime,
+        endTime: order.endTime,
         timeRemaining,
-        priceDecayRate: calculationResult.priceDecayRate,
+        priceDecay: calculationResult.priceDecay,
+        isProfitable: calculationResult.isProfitable,
+        estimatedProfit: calculationResult.estimatedProfit,
         nextPriceUpdate: currentTime + 60, // Next update in 60 seconds
         isActive: order.status === AuctionStatus.ACTIVE && timeRemaining > 0,
         progress,
@@ -509,7 +536,7 @@ class OrdersRoutes {
           continue;
         }
 
-        const calculationResult = this.calculator.calculateWithProfitability(order, gasPrice, currentTime);
+        const calculationResult = AuctionCalculator.calculateWithProfitability(this.convertToOrderCalculatorFormat(order), gasPrice, currentTime);
         
         if (calculationResult.isProfitable) {
           const netProfitBigInt = BigInt(calculationResult.netProfit);
@@ -692,7 +719,15 @@ class OrdersRoutes {
     }
   }
 
-  private sanitizeOrderForResponse(order: DutchAuctionOrder & { status: AuctionStatus; createdAt: Date; updatedAt: Date }) {
+  private convertToOrderCalculatorFormat(order: OrderWithMetadata): DutchAuctionOrder {
+    return {
+      ...order,
+      createdAt: order.createdAt.getTime(),
+      updatedAt: order.updatedAt.getTime()
+    };
+  }
+
+  private sanitizeOrderForResponse(order: OrderWithMetadata) {
     return {
       orderHash: order.orderHash,
       maker: order.maker,
@@ -729,7 +764,7 @@ class OrdersRoutes {
   }
 
   // Public method to get all orders (for integration with other services)
-  public getAllOrders(): (DutchAuctionOrder & { status: AuctionStatus; createdAt: Date; updatedAt: Date })[] {
+  public getAllOrders(): OrderWithMetadata[] {
     return Array.from(this.orders.values());
   }
 

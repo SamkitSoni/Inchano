@@ -12,7 +12,6 @@ export interface PriceUpdateConfig {
 export class PriceUpdateService {
   private ordersService: OrdersRoutes;
   private webSocketService: WebSocketService;
-  private calculator: AuctionCalculator;
   private config: PriceUpdateConfig;
   private updateInterval: NodeJS.Timeout | null = null;
   private isRunning: boolean = false;
@@ -27,7 +26,6 @@ export class PriceUpdateService {
   ) {
     this.ordersService = ordersService;
     this.webSocketService = webSocketService;
-    this.calculator = new AuctionCalculator();
     this.config = config;
   }
 
@@ -84,7 +82,7 @@ export class PriceUpdateService {
 
         // Calculate current price
         try {
-          const auctionDetails = this.calculator.calculateAuctionDetails(order, currentTime);
+          const auctionDetails = AuctionCalculator.calculateAuctionDetails(this.convertToOrderCalculatorFormat(order), currentTime);
           
           // Broadcast price update
           this.webSocketService.broadcastOrderUpdated(order.orderHash, {
@@ -137,7 +135,7 @@ export class PriceUpdateService {
         }
 
         try {
-          const calculationResult = this.calculator.calculateWithProfitability(order, gasPrice, currentTime);
+          const calculationResult = AuctionCalculator.calculateWithProfitability(this.convertToOrderCalculatorFormat(order), gasPrice, currentTime);
           
           if (calculationResult.isProfitable) {
             const netProfitBigInt = BigInt(calculationResult.netProfit);
@@ -206,5 +204,13 @@ export class PriceUpdateService {
     }
 
     logger.info('PriceUpdateService configuration updated', this.config);
+  }
+
+  private convertToOrderCalculatorFormat(order: any) {
+    return {
+      ...order,
+      createdAt: order.createdAt instanceof Date ? order.createdAt.getTime() : order.createdAt,
+      updatedAt: order.updatedAt instanceof Date ? order.updatedAt.getTime() : order.updatedAt
+    };
   }
 }

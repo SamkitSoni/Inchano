@@ -7,7 +7,7 @@ import {
   generateOrderHash,
   getNetworkFromChainId 
 } from '../utils/signatureVerification';
-import { DutchAuctionOrder } from '../auction-details/types';
+import { DutchAuctionOrder, AuctionStatus } from '../auction-details/types';
 import { AuctionCalculator } from '../auction-details/calculator';
 
 export interface ProcessedOrder {
@@ -59,12 +59,10 @@ export interface DutchAuctionParams {
 export class OrderProcessingService {
   private orders: Map<string, ProcessedOrder> = new Map();
   private webSocketService: WebSocketService | undefined;
-  private auctionCalculator: AuctionCalculator;
   private auctionTimers: Map<string, NodeJS.Timeout> = new Map();
 
   constructor(webSocketService?: WebSocketService) {
     this.webSocketService = webSocketService;
-    this.auctionCalculator = new AuctionCalculator();
     
     // Start periodic cleanup of expired orders
     this.startPeriodicCleanup();
@@ -125,6 +123,8 @@ export class OrderProcessingService {
         receiver: params.receiver,
         makerAsset: params.makerAsset,
         takerAsset: params.takerAsset,
+        makingAmount: params.makerAmount,
+        takingAmount: params.takerAmount,
         makerAmount: params.makerAmount,
         takerAmount: params.takerAmount,
         startTime: params.auctionStartTime,
@@ -134,7 +134,10 @@ export class OrderProcessingService {
         auctionStartTime: params.auctionStartTime,
         auctionEndTime: params.auctionEndTime,
         signature: params.signature,
-        salt: limitOrder.salt
+        salt: limitOrder.salt,
+        status: AuctionStatus.CREATED,
+        createdAt: Date.now(),
+        updatedAt: Date.now()
       };
 
       // Create processed order
@@ -253,7 +256,7 @@ export class OrderProcessingService {
       }
 
       const currentTime = Math.floor(Date.now() / 1000);
-      const auctionDetails = this.auctionCalculator.calculateAuctionDetails(order.dutchOrder, currentTime);
+      const auctionDetails = AuctionCalculator.calculateAuctionDetails(order.dutchOrder, currentTime);
 
       return {
         success: true,

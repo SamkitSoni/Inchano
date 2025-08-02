@@ -38,7 +38,7 @@ export class WebSocketService extends EventEmitter {
   private heartbeatInterval: NodeJS.Timeout = setInterval(() => {}, 0);
   private port: number;
 
-  constructor(port: number = 8081, orderRoutes?: OrdersRoutes) {
+  constructor(port: number = 8082, orderRoutes?: OrdersRoutes) {
     super();
     this.port = port;
     this.orderRoutes = orderRoutes || {} as OrdersRoutes; // Temporary placeholder

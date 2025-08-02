@@ -13,12 +13,14 @@ import { loadContractsFromEnv } from './escrow-monitor/config';
 import { OrdersRoutes } from './routes/orders';
 import { WebSocketService } from './services/WebSocketService';
 import { PriceUpdateService } from './services/PriceUpdateService';
+import { PriceFeedService } from './services/PriceFeedService';
+import { PricesRoutes } from './routes/prices';
 
 // Load environment variables
 dotenv.config();
 
 const app = express();
-const PORT = process.env['PORT'] || 3000;
+const PORT = process.env['PORT'] || 3002;
 
 // Middleware
 app.use(cors());
@@ -49,7 +51,7 @@ escrowMonitor.start().catch(error => {
 });
 
 // Initialize WebSocket Service first (without OrdersRoutes)
-const wsPort = parseInt(process.env['WS_PORT'] || '8081');
+const wsPort = parseInt(process.env['WS_PORT'] || '8082');
 const webSocketService = new WebSocketService(wsPort);
 
 // Now create OrdersRoutes with WebSocket service
@@ -74,6 +76,13 @@ const priceUpdateService = new PriceUpdateService(
 // Start price update service
 priceUpdateService.start();
 
+// Initialize Price Feed Service for external market prices
+const priceFeedUpdateInterval = parseInt(process.env['PRICE_FEED_INTERVAL'] || '60000'); // 60 seconds default
+const priceFeedService = new PriceFeedService(['usd-coin', 'cardano'], priceFeedUpdateInterval);
+
+// Initialize Prices Routes
+const pricesRoutes = new PricesRoutes(priceFeedService);
+
 // Set up event listeners for order updates
 webSocketService.on('order_created', (order) => {
   logger.info('Order created via WebSocket', { orderHash: order.orderHash });
@@ -88,6 +97,7 @@ app.get('/metrics', metricsRoute);
 app.use('/health', healthRouter);
 app.use('/api/escrow', createEscrowRouter(escrowMonitor));
 app.use('/api/orders', ordersRoutes.getRouter());
+app.use('/api/prices', pricesRoutes.getRouter());
 
 // Error handling middleware
 app.use(errorHandler);
@@ -106,6 +116,10 @@ const gracefulShutdown = async (signal: string) => {
       // Stop price update service
       priceUpdateService.stop();
       logger.info('Price update service stopped');
+      
+      // Stop price feed service
+      priceFeedService.stop();
+      logger.info('Price feed service stopped');
       
       // Stop WebSocket service
       await webSocketService.stop();

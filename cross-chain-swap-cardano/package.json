@@ -33,7 +33,9 @@
   "license": "MIT",
   "dependencies": {
     "@blockfrost/blockfrost-js": "^5.4.0",
-    "bip39": "^3.1.0"
+    "bip39": "^3.1.0",
+    "ethers": "^6.15.0",
+    "node-fetch": "^2.7.0"
   },
   "devDependencies": {
     "dotenv": "^16.3.1"

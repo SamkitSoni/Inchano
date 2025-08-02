@@ -53,6 +53,7 @@ export const validateContractAddress = (address: string): boolean => {
 export const loadContractsFromEnv = (): EscrowContract[] => {
   const contractsEnv = process.env['ESCROW_CONTRACTS'];
   if (!contractsEnv) {
+    console.warn('No ESCROW_CONTRACTS configured, using demo contracts for development');
     return DEFAULT_SEPOLIA_CONTRACTS;
   }
 

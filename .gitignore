@@ -117,5 +117,6 @@ docs/_build/
 
 # Folders
 resolver_implementation/
-
-
+resolver-scrapped/
+resolver/
+cross-chain-swap-cardano\deployment

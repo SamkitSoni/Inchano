@@ -33,7 +33,6 @@ Inchano is a next-generation cross-chain DeFi protocol that facilitates seamless
 └─────────────────┘    └─────────────────┘    └─────────────────┘
 ```
 
-### Flow Diagram
 
 ```mermaid
 graph TD
@@ -133,19 +132,9 @@ Inchano/
    
    # Frontend application
    cd ../app && npm install
-   
-   # Relayer service components
-   cd ../relayer-service && npm install
    ```
 
 3. **Configure environment variables**
-   ```bash
-   # Copy environment template
-   cp relayer/.env.example relayer/.env
-   
-   # Edit with your credentials
-   nano relayer/.env
-   ```
 
    Required variables:
    ```env
@@ -171,20 +160,14 @@ Inchano/
    npm run dev
    ```
 
-2. **Launch the gateway service**
-   ```bash
-   cd relayer-service
-   npm run build
-   npm start
-   ```
 
-3. **Run the frontend**
+2. **Run the frontend**
    ```bash
    cd app
    npm run dev
    ```
 
-4. **Deploy smart contracts** (if needed)
+3. **Deploy smart contracts** (if needed)
    ```bash
    cd limit-order-protocol-cardano
    npm run deploy
@@ -252,21 +235,7 @@ Next.js-based user interface for interacting with the protocol.
 - Order creation and management
 - Cross-chain swap interface
 - Real-time price monitoring
-
-## 📊 Network Information
-
-### Cardano Preprod Testnet
-
-- **Limit Order Protocol**: `addr_test1w9f069f153ac688ac08c97da0a29e7c061ba21dadae384edcfa2369fc`
-- **Escrow Factory**: `addr_test1w1e0a111161ed6495ef29fac0c4209838724c26680d0420af26d5bcec`
-- **Explorer**: [Preprod CardanoScan](https://preprod.cardanoscan.io)
-
-### Ethereum Sepolia Testnet
-
-- **Limit Order Protocol**: `0x7b728d06b49DB49b0858397fDBe48bC57a814AF0`
-- **Escrow Factory**: `0xB0285B9817B7F798ba7a3AE141023ec0e0088cF0`
-- **Explorer**: [Sepolia Etherscan](https://sepolia.etherscan.io)
-
+- 
 ## 🔄 Order Flow
 
 ### Dutch Auction Process
@@ -325,49 +294,11 @@ npm run test:e2e
 - **Network Security**: Secure RPC connections
 - **Audit Trail**: Complete transaction logging
 
-## 🤝 Contributing
-
-We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
-
-### Development Workflow
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add comprehensive tests
-5. Submit a pull request
 
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🆘 Support
-
-- **Documentation**: Check the component-specific READMEs
-- **Issues**: Create GitHub issues for bugs or feature requests
-- **Community**: Join our Discord/Telegram for discussions
-
-## 🎯 Roadmap
-
-### Phase 1 (Current)
-- ✅ Core relayer service
-- ✅ Cardano smart contracts
-- ✅ Ethereum integration
-- ✅ Basic Dutch auction support
-
-### Phase 2 (In Progress)
-- 🔄 Advanced resolver network
-- 🔄 Enhanced MEV protection
-- 🔄 Production deployment
-- 🔄 Comprehensive monitoring
-
-### Phase 3 (Planned)
-- 📋 Multi-chain expansion
-- 📋 Advanced order types
-- 📋 Governance token
-- 📋 DAO implementation
-
----
 
 **Built with ❤️ by the Inchano Team**
 

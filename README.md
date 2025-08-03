@@ -34,31 +34,6 @@ Inchano is a next-generation cross-chain DeFi protocol that facilitates seamless
 ```
 
 
-```mermaid
-graph TD
-    A[User Creates Order] --> B[Frontend UI]
-    B --> C[Relayer Service]
-    C --> D{Order Type}
-    
-    D -->|Dutch Auction| E[Fusion+ Gateway]
-    D -->|Cross-Chain| F[Escrow Factory]
-    
-    E --> G[Resolver Network]
-    F --> H[Cardano Contract]
-    F --> I[Ethereum Contract]
-    
-    G --> J[Order Execution]
-    H --> K[Source Escrow]
-    I --> L[Destination Escrow]
-    
-    J --> M[Settlement]
-    K --> N[Atomic Swap]
-    L --> N
-    
-    N --> O[Funds Released]
-    M --> O
-    O --> P[Transaction Complete]
-```
 
 ## 📦 Project Structure
 
@@ -157,7 +132,7 @@ Inchano/
 1. **Start the relayer service**
    ```bash
    cd relayer
-   npm run dev
+   PORT=3001 && npm run dev
    ```
 
 
